@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Fresh Dairy Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Confirmation Content */
+        .confirmation-content {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .success-animation {
+            margin-bottom: 40px;
+        }
+
+        .checkmark-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #4CAF50;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        .checkmark {
+            color: white;
+            font-size: 3rem;
+            animation: checkmarkPop 0.6s ease-out 0.8s both;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .confirmation-message {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .confirmation-message h1 {
+            color: #2E7D32;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-message .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .order-details {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .order-id {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        .order-date {
+            color: #666;
+        }
+
+        .customer-info, .delivery-info {
+            margin-bottom: 25px;
+        }
+
+        .info-section h3 {
+            color: #2E7D32;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        /* Order Items */
+        .order-items {
+            margin: 25px 0;
+        }
+
+        .items-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .order-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .item-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-icon {
+            font-size: 2.5rem;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .item-info h4 {
+            color: #2E7D32;
+            margin-bottom: 5px;
+        }
+
+        .item-quantity {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        /* Order Totals */
+        .order-totals {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .total-row:last-child {
+            border-bottom: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2E7D32;
+            border-top: 2px solid #e0e0e0;
+            margin-top: 10px;
+            padding-top: 15px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .btn-primary {
+            background: #ff6b35;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #2E7D32;
+            border: 2px solid #2E7D32;
+        }
+
+        .btn-outline:hover {
+            background: #2E7D32;
+            color: white;
+        }
+
+        /* Timeline */
+        .delivery-timeline {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .timeline-title {
+            text-align: center;
+            color: #2E7D32;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e0e0e0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #4CAF50;
+        }
+
+        .timeline-item.active::before {
+            background: #ff6b35;
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2);
+        }
+
+        .timeline-item h4 {
+            color: #2E7D32;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: #2E7D32;
+            margin-bottom: 20px;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+        }
+
+        .contact-method .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .confirmation-message {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .confirmation-message h1 {
+                font-size: 2.2rem;
+            }
+
+            .order-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .item-details {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* Auto redirect countdown */
+        .redirect-notice {
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            color: #e55a2b;
+            font-weight: bold;
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            color: #ff6b35;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🥛 Fresh Dairy</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="confirmation-content">
+        <div class="container">
+            <div class="success-animation">
+                <div class="checkmark-circle">
+                    <div class="checkmark">✓</div>
+                </div>
+            </div>
+
+            <div class="confirmation-message">
+                <h1>Order Confirmed!</h1>
+                <p class="subtitle">Thank you for your order. We've received your request and will process it shortly.</p>
+
+                <div class="order-details" id="orderDetails">
+                    <!-- Order details will be populated by JavaScript -->
+                </div>
+
+                <div class="delivery-timeline">
+                    <h3 class="timeline-title">📦 Delivery Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item active">
+                            <h4>Order Confirmed</h4>
+                            <p>Your order has been received and confirmed</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Preparing Order</h4>
+                            <p>We're gathering your fresh dairy products</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Out for Delivery</h4>
+                            <p>Your order is on its way to you</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Delivered</h4>
+                            <p>Enjoy your fresh dairy products!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Need Help?</h3>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <span class="icon">📧</span>
+                            <span>support@freshdairy.com</span>
+                        </div>
+                        <div class="contact-method">
+                            <span class="icon">📞</span>
+                            <span>(555) 123-4567</span>
+                        </div>
+                        <div class="contact-method">
+                            <span class="icon">💬</span>
+                            <span>Live Chat Available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="products.html" class="btn btn-secondary">Continue Shopping</a>
+                    <button onclick="window.print()" class="btn btn-outline">Print Receipt</button>
+                </div>
+
+                <div class="redirect-notice" id="redirectNotice" style="display: none;">
+                    <p>You will be redirected to the home page in <span class="countdown" id="countdown">10</span> seconds.</p>
+                    <button onclick="cancelRedirect()" class="btn btn-outline" style="margin-top: 10px;">Stay on Page</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let redirectTimer;
+        let countdownTimer;
+        let timeLeft = 10;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderDetails();
+            startRedirectCountdown();
+        });
+
+        function loadOrderDetails() {
+            const orderData = JSON.parse(localStorage.getItem('lastOrder'));
+            
+            if (!orderData) {
+                // If no order data, redirect to home
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const orderDetailsContainer = document.getElementById('orderDetails');
+            const orderDate = new Date(orderData.orderDate);
+            
+            orderDetailsContainer.innerHTML = `
+                <div class="order-header">
+                    <div class="order-id">Order #${orderData.orderId}</div>
+                    <div class="order-date">${orderDate.toLocaleDateString()} at ${orderDate.toLocaleTimeString()}</div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="customer-info info-section">
+                        <h3>👤 Customer Information</h3>
+                        <div class="info-item">
+                            <div class="info-label">Name</div>
+                            <div class="info-value">${orderData.customer.firstName} ${orderData.customer.lastName}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">${orderData.customer.email}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">${orderData.customer.phone}</div>
+                        </div>
+                    </div>
+
+                    <div class="delivery-info info-section">
+                        <h3>🚚 Delivery Information</h3>
+                        <div class="info-item">
+                            <div class="info-label">Address</div>
+                            <div class="info-value">
+                                ${orderData.delivery.address}<br>
+                                ${orderData.delivery.city}, ${orderData.delivery.state} ${orderData.delivery.zipCode}
+                            </div>
+                        </div>
+                        ${orderData.delivery.notes ? `
+                        <div class="info-item">
+                            <div class="info-label">Delivery Notes</div>
+                            <div class="info-value">${orderData.delivery.notes}</div>
+                        </div>
+                        ` : ''}
+                        <div class="info-item">
+                            <div class="info-label">Payment Method</div>
+                            <div class="info-value">${formatPaymentMethod(orderData.payment.method)}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-items">
+                    <h3>📦 Order Items</h3>
+                    <div class="items-list">
+                        ${orderData.items.map(item => `
+                            <div class="order-item">
+                                <div class="item-details">
+                                    <div class="item-icon">${item.icon}</div>
+                                    <div class="item-info">
+                                        <h4>${item.name}</h4>
+                                        <div class="item-quantity">Quantity: ${item.quantity}</div>
+                                    </div>
+                                </div>
+                                <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="order-totals">
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span>$${orderData.totals.subtotal.toFixed(2)}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Delivery Fee:</span>
+                        <span>$${orderData.totals.deliveryFee.toFixed(2)}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Tax:</span>
+                        <span>$${orderData.totals.tax.toFixed(2)}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Total:</span>
+                        <span>$${orderData.totals.total.toFixed(2)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatPaymentMethod(method) {
+            switch(method) {
+                case 'card': return '💳 Credit Card';
+                case 'paypal': return '🅿️ PayPal';
+                case 'cash': return '💵 Cash on Delivery';
+                default: return method;
+            }
+        }
+
+        function startRedirectCountdown() {
+            const redirectNotice = document.getElementById('redirectNotice');
+            const countdownElement = document.getElementById('countdown');
+            
+            // Show the redirect notice after 5 seconds
+            setTimeout(() => {
+                redirectNotice.style.display = 'block';
+                
+                countdownTimer = setInterval(() => {
+                    timeLeft--;
+                    countdownElement.textContent = timeLeft;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownTimer);
+                        window.location.href = 'index.html';
+                    }
+                }, 1000);
+            }, 5000);
+        }
+
+        function cancelRedirect() {
+            clearInterval(countdownTimer);
+            document.getElementById('redirectNotice').style.display = 'none';
+        }
+
+        // Print functionality
+        window.addEventListener('beforeprint', function() {
+            document.body.style.backgroundColor = 'white';
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.body.style.backgroundColor = '';
+        });
+    </script>
+</body>
+</html>
